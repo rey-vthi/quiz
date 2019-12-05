@@ -1,49 +1,46 @@
 const quizSet = require("./quizKey.json");
 let { stdin, stdout } = process;
+let scores = 0;
 stdin.setEncoding("utf8");
-const getQuestion = function(questionKey) {
-  console.log(questionKey["question"]);
+const displayQuestionWithTimer = function(questionKey) {
+  stdin.write(`\n${questionKey.question}\n`);
+  return createTimer();
+};
+
+const createTimer = function() {
   return setTimeout(() => {
-    console.log("time up");
+    stdout.write("TIME UP\n");
     stdin.emit("data");
-  }, 60000);
+  }, 15000);
 };
 
 const isCorrectAnswer = function(actual, expected) {
   return actual === expected.answer;
 };
 
-const createEvaluator = function(questionSet, timeOutId) {
-  let questionCount = 0;
-  let scores = 0;
-  const evaluate = function(ans) {
-    questionCount++;
-    const currentSet = questionSet[questionCount - 1];
-    if (ans) {
-      ans = ans.trim();
-      if (isCorrectAnswer(ans, currentSet)) {
-        scores++;
-        console.log("your answer is correct\nyour score:", scores);
-      } else {
-        console.log("sorry !!!! CORRECT answer is: ", currentSet.answer);
-      }
-      clearTimeout(timeOutId);
-    }
-    if (questionCount < questionSet.length) {
-      timeOutId = getQuestion(questionSet[questionCount]);
-    } else {
-      console.log("your score is ", scores);
-      console.log("thanku for playing");
-      process.exit();
-    }
-  };
-  return evaluate;
+const displayResult = function(answer, currentSet) {
+  let msg = "sorry !!!! CORRECT answer is: " + currentSet.answer;
+  if (isCorrectAnswer(answer, currentSet)) {
+    scores++;
+    msg = "your answer is correct\nyour score:" + scores;
+  }
+  stdin.write(`${msg}\n`);
 };
 
 const main = function() {
-  let timeOutId = getQuestion(quizSet[0]);
-  const evaluateAnswer = createEvaluator(quizSet, timeOutId);
-  stdin.on("data", evaluateAnswer);
+  let questionCount = 0;
+  let timeOutId = displayQuestionWithTimer(quizSet[0]);
+  stdin.on("data", data => {
+    if (data) displayResult(data.trim(), quizSet[questionCount]);
+    clearTimeout(timeOutId);
+    questionCount++;
+    displayQuestionWithTimer(quizSet[questionCount]);
+  });
 };
+
+process.on("uncaughtException", () => {
+  stdout.write(`\nYOUR TOTAL SCORE : ${scores}`);
+  process.exit(0);
+});
 
 main();
