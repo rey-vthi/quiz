@@ -1,0 +1,40 @@
+[
+  { "question": "Who is the father of computer", "answer": "charles babage" },
+  {
+    "question": "What is always coming, but never arrives?",
+    "answer": "tommorow"
+  },
+  {
+    "question": "What can one catch that is not thrown?",
+    "answer": "cold"
+  },
+  {
+    "question": "If you have a bowl with six apples and you take away four, how many do you have?",
+    "answer": "4"
+  },
+  { "question": "what is summation of 2, 4", "answer": "6" },
+  {
+    "question": "Some months have 31 days, others have 30 days, but how many have 28 days?",
+    "answer": "12"
+  },
+  {
+    "question": " What is it that goes up, but never comes down?",
+    "answer": "age"
+  },
+  {
+    "question": "Which word is spelt wrong in every dictionary?",
+    "answer": "wrong"
+  },
+  {
+    "question": "Everyone has it and no one can lose it, what is it?",
+    "answer": "shadow"
+  },
+  {
+    "question": "What belongs to you but is used more by others?",
+    "answer": "name"
+  },
+  {
+    "question": "What runs but never walks?",
+    "answer": "water"
+  }
+]
