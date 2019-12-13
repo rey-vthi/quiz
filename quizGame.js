@@ -10,7 +10,6 @@ const displayQuestionWithTimer = function(questionKey) {
 const createTimer = function() {
   return setTimeout(() => {
     stdout.write("TIME UP\n");
-    stdin.emit("data");
   }, 15000);
 };
 
